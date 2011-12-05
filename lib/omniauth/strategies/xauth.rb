@@ -3,6 +3,8 @@ require 'multi_json'
 
 module OmniAuth
   module Strategies
+
+    # This code is originally from oa-omniauth.gem and applied some fixes for OmniAuth 1.0.
     class XAuth
       include OmniAuth::Strategy
 

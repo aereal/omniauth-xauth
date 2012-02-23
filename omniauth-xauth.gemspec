@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "omniauth-xauth/version"
+require File.expand_path('../lib/omniauth-xauth/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "omniauth-xauth"
@@ -18,7 +17,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency 'omniauth'
-  s.add_runtime_dependency 'oauth'
-  s.add_runtime_dependency 'multi_json'
+  s.add_runtime_dependency     'omniauth', '~> 1.0'
+  s.add_runtime_dependency     'oauth'
+  s.add_development_dependency 'rspec', '~> 2.8'
+  s.add_development_dependency 'webmock'
+  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'rack-test'
 end

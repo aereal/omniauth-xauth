@@ -1,3 +1,8 @@
+![Dependency Status](https://gemnasium.com/aereal/omniauth-xauth.png)
+
+![Build Status](https://secure.travis-ci.org/aereal/omniauth-xauth.png)
+
+
 # OmniAuth XAuth
 
 OmniAuth XAuth strategy for use in [OmniAuth](https://github.com/intridea/omniauth) 1.0 strategy development.

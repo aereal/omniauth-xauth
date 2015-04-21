@@ -1,5 +1,4 @@
 require 'omniauth'
-require 'multi_json'
 require 'oauth'
 
 module OmniAuth
@@ -48,8 +47,6 @@ module OmniAuth
         fail!(:service_unavailable, e)
       rescue ::OAuth::Unauthorized => e
         fail!(:invalid_credentials, e)
-      rescue ::MultiJson::DecodeError => e
-        fail!(:invalid_response, e)
       rescue ::OmniAuth::NoSessionError => e
         fail!(:session_expired, e)
       rescue => e

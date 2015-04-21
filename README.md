@@ -1,7 +1,5 @@
-![Dependency Status](https://gemnasium.com/aereal/omniauth-xauth.png)
-
-![Build Status](https://secure.travis-ci.org/aereal/omniauth-xauth.png)
-
+[![Build Status](https://travis-ci.org/aereal/omniauth-xauth.svg?branch=master)](https://travis-ci.org/aereal/omniauth-xauth)
+[![Dependency Status](https://gemnasium.com/aereal/omniauth-xauth.png)](https://gemnasium.com/aereal/omniauth-xauth)
 
 # OmniAuth XAuth
 
@@ -20,39 +18,40 @@ and can be styled as such.
 To create an OmniAuth XAuth strategy using this gem, you can simply
 subclass it and add a few extra methods like so:
 
-    require 'omniauth-xauth'
+```ruby
+require 'json'
+require 'omniauth-xauth'
 
-    module OmniAuth
-      module Strategies
-        class SomeSite < OmniAuth::Strategies::XAuth
-          option :client_options, {
-            :site               => 'http://www.service.com/',
-            :access_token_url   => 'https://www.service.com/oauth/access_token'
-          }
-          option :xauth_options, { :title => 'XAuth Login Form Header'}
+module OmniAuth
+  module Strategies
+    class SomeSite < OmniAuth::Strategies::XAuth
+      option :client_options, {
+        :site               => 'http://www.service.com/',
+        :access_token_url   => 'https://www.service.com/oauth/access_token'
+      }
+      option :xauth_options, { :title => 'XAuth Login Form Header'}
 
+      # This is where you pass the options you would pass when
+      # initializing your consumer from the OAuth gem.
 
-          # This is where you pass the options you would pass when
-          # initializing your consumer from the OAuth gem.
+      uid { raw_info['uid'] }
+      info do
+        {
+          :name => raw_info['name'],
+          :email => raw_info['email']
+        }
+      end
 
+      extra do
+        {
+          'raw_info' => raw_info
+        }
+      end
 
-          uid { raw_info['uid'] }
-          info do
-            {
-              :name => raw_info['name'],
-              :email => raw_info['email']
-            }
-          end
-
-          extra do
-            {
-              'raw_info' => raw_info
-            }
-          end
-
-          def raw_info
-            @raw_info ||= MultiJson.decode(access_token.get('/me.json').body)
-          end
-        end
+      def raw_info
+        @raw_info ||= JSON.load(access_token.get('/me.json').body)
       end
     end
+  end
+end
+```

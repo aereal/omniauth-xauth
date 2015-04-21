@@ -11,7 +11,7 @@ end
 
 group :test do
   gem 'rack-test'
-  gem 'rspec', '~> 2.8'
+  gem 'rspec', '~> 3.2'
   gem 'simplecov'
   gem 'webmock'
 end

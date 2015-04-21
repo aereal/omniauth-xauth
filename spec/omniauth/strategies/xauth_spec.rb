@@ -119,19 +119,6 @@ describe "OmniAuth::Strategies::XAuth" do
         last_request.env['omniauth.error.type'] = :invalid_credentials
       end
     end
-
-    context 'JSON Parse error' do
-      before do
-        stub_request(:post, 'https://api.example.org/oauth/access_token').
-           to_raise(::MultiJson::DecodeError.new("Parse Error", 'foo', 'bar'))
-        get '/auth/example.org/callback', {}, {'rack.session' => { 'omniauth.xauth' => { 'x_auth_mode' => 'client_auth', 'x_auth_username' => 'username', 'x_auth_password' => 'password' }}}
-      end
-
-      it 'should call fail! with :service_unavailable' do
-        last_request.env['omniauth.error'].should be_kind_of(::MultiJson::DecodeError)
-        last_request.env['omniauth.error.type'] = :invalid_response
-      end
-    end
   end
 
   describe '/auth/{name}/callback with expired session' do

@@ -108,8 +108,9 @@ describe "OmniAuth::Strategies::XAuth" do
 
     context 'Unauthorized failure' do
       before do
+        response = Struct.new(:code, :message).new(401, "Unauthorized")
         stub_request(:post, 'https://api.example.org/oauth/access_token').
-           to_raise(::OAuth::Unauthorized.new("Unauthorized"))
+           to_raise(::OAuth::Unauthorized.new(response))
         get '/auth/example.org/callback', {}, {'rack.session' => { 'omniauth.xauth' => { 'x_auth_mode' => 'client_auth', 'x_auth_username' => 'username', 'x_auth_password' => 'password' }}}
       end
 
